@@ -18,16 +18,6 @@ pdf_images_dir = os.path.join(script_dir, 'PDFimages/')
 found_photos_dir = os.path.join(photos_dir, 'found/')
 found_pdf_images_dir = os.path.join(pdf_images_dir, 'found/')
 
-## Load the CSV file
-#csv_file_path = 'C:/Users/iatro/Desktop/PhotoCheck/similarities.csv'
-#df = pd.read_csv(csv_file_path)
-#
-## Define the source and destination directories
-#photos_dir = 'C:/Users/iatro/Desktop/PhotoCheck/Photos'
-#pdf_images_dir = 'C:/Users/iatro/Desktop/PhotoCheck/PDFimages'
-#found_photos_dir = 'C:/Users/iatro/Desktop/PhotoCheck/Photos/found'
-#found_pdf_images_dir = 'C:/Users/iatro/Desktop/PhotoCheck/PDFimages/found'
-
 # Create the destination directories if they do not exist
 if not os.path.exists(found_photos_dir):
     os.makedirs(found_photos_dir)
@@ -72,7 +62,7 @@ def on_yes():
         'image ': test_image
     }
 
-    result_file_path = 'C:/Users/iatro/Desktop/PhotoCheck/results.csv'  # Path to results.csv
+    result_file_path = os.path.join(script_dir, 'results.csv')
     result_exists = os.path.exists(result_file_path)
 
     # Write to results.csv without empty lines

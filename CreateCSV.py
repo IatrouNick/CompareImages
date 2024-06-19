@@ -38,9 +38,6 @@ def calculate_similarity(features1, features2):
 if __name__ == "__main__":
     photos_folder_path = os.path.join(script_dir, 'Photos/')
     test_folder_path = os.path.join(script_dir, 'PDFimages/')
-    
-    #photos_folder_path = 'C:/Users/iatro/Desktop/PhotoCheck/Photos/'  # Folder containing the photos to compare
-    #test_folder_path = 'C:/Users/iatro/Desktop/PhotoCheck/PDFimages/'  # Folder containing the images to compare against
 
     # Initialize a dictionary to store the similarity scores for each image
     similarities_dict = {}
@@ -68,7 +65,6 @@ if __name__ == "__main__":
 
     # Write the similarities to a CSV file
     csv_file_path = os.path.join(script_dir, 'similarities.csv')
-    #csv_file_path = 'C:/Users/iatro/Desktop/PhotoCheck/similarities.csv'
     with open(csv_file_path, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Photo Image', 'Test Image', 'Similarity'])
