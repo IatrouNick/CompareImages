@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from PIL import Image, ImageTk
+from PIL import Image, ImageTk, ExifTags
 import pandas as pd
 import os
 import shutil
@@ -25,9 +25,38 @@ if not os.path.exists(found_pdf_images_dir):
     os.makedirs(found_pdf_images_dir)
 
 # Helper function to load images
-def load_image(image_path, max_size=(400, 400)):
+def load_image2(image_path, max_size=(600, 600)):
     img = Image.open(image_path)
     img.thumbnail(max_size)
+    return ImageTk.PhotoImage(img)
+
+# Helper function to load images without rotation
+def load_image(image_path, max_size=(600, 600)):
+    img = Image.open(image_path)
+    
+    # Rotate the image based on EXIF orientation (if available)
+    try:
+        for orientation in ExifTags.TAGS.keys():
+            if ExifTags.TAGS[orientation] == 'Orientation':
+                break
+        exif = dict(img._getexif().items())
+
+        if exif[orientation] == 3:
+            img = img.rotate(180, expand=True)
+        elif exif[orientation] == 6:
+            img = img.rotate(270, expand=True)
+        elif exif[orientation] == 8:
+            img = img.rotate(90, expand=True)
+    except (AttributeError, KeyError, IndexError):
+        # Cases where there is no EXIF data or orientation tag
+        pass
+    
+    # Convert to RGB mode if not already in RGB
+    img = img.convert('RGB')
+    
+    # Resize the image while preserving aspect ratio and using a high-quality resampling filter
+    img = img.resize(max_size, Image.LANCZOS)
+    
     return ImageTk.PhotoImage(img)
 
 # Function to handle "Yes" button click
